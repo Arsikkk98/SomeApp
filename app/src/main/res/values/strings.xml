@@ -20,4 +20,8 @@
     <string name="biometric_title">Авторизация по сканеру отпечатка пальца</string>
     <string name="biometric_desc">Используйте отпечаток пальцев, чтобы авторизоваться в приложении</string>
     <string name="biometric_cancel">Ввести пароль</string>
+
+    <string name="swipe_up">SWIPE UP</string>
+    <string name="zero">0</string>
+    <string name="disappear_image">Background</string>
 </resources>

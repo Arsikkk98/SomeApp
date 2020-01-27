@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/broaden_wild"
+        android:contentDescription="@string/disappear_image"
         android:scaleType="centerCrop"/>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/disappear_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:background="@color/colorPrimary">
+
 
         <TextView
+            android:id="@+id/swipe_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40sp"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:text="SWIPE UP"/>
+            android:text="@string/swipe_up"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/counter_layout"/>
+
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/counter_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
             android:background="@color/colorPrimary"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/swipe_textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 android:id="@+id/first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="100sp"
-                android:layout_marginStart="90dp"
-                android:text="0"
+                android:text="@string/zero"
                 android:textColor="@color/colorWhite"/>
             <TextView
                 android:id="@+id/second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="100sp"
-                android:text="0"
+                android:text="@string/zero"
                 android:textColor="@color/colorWhite"/>
             <TextView
                 android:id="@+id/third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="100sp"
-                android:text="0"
+                android:text="@string/zero"
                 android:textColor="@color/colorWhite"/>
             <TextView
                 android:id="@+id/fourth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="100sp"
-                android:text="0"
+                android:text="@string/zero"
                 android:textColor="@color/colorWhite"/>
 
         </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

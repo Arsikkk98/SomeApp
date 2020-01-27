@@ -2,25 +2,31 @@ package com.example.someapp.ui.disappear
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.someapp.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class DisappearFragment : Fragment(), View.OnTouchListener {
 
     private lateinit var disappearViewModel: DisappearViewModel
     private lateinit var root: View
-    private lateinit var disappearLayer: LinearLayout
+    private lateinit var disappearLayer: ConstraintLayout
+
+    private var continueChangingDigits = true
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -34,6 +40,26 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
 
         disappearLayer = root.findViewById(R.id.disappear_layer)
         disappearLayer.setOnTouchListener(this)
+
+        val first = root.findViewById<TextView>(R.id.first)
+        val second = root.findViewById<TextView>(R.id.second)
+        val third = root.findViewById<TextView>(R.id.third)
+        val fourth = root.findViewById<TextView>(R.id.fourth)
+        val viewModel by lazy {
+            ViewModelProviders.of(this).get(DisappearViewModel::class.java)
+        }
+        viewModel.getDigitNow(1).observe(this, Observer<String>{ digit ->
+            first.text = digit
+        })
+        viewModel.getDigitNow(2).observe(this, Observer<String>{ digit ->
+            second.text = digit
+        })
+        viewModel.getDigitNow(3).observe(this, Observer<String>{ digit ->
+            third.text = digit
+        })
+        viewModel.getDigitNow(4).observe(this, Observer<String>{ digit ->
+            fourth.text = digit
+        })
 
         return root
     }
@@ -77,21 +103,4 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         back.alpha = 255
         disappearLayer.background = back
     }
-
-    /*private fun twistFirstDigit() {
-        var first = root.findViewById<TextView>(R.id.first)
-        GlobalScope.async(){
-            var counter = 20
-            while (counter > 0){
-                var nowValue = first.text.toString().toInt()
-                if (nowValue == 9)
-                    nowValue = 0
-                else
-                    nowValue++
-                first.text = nowValue.toString()
-                delay(100)
-                counter--
-            }
-        }
-    }*/
 }
