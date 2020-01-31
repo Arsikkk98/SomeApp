@@ -1,6 +1,8 @@
 package com.example.someapp.ui.disappear
 
+import android.graphics.Color
 import android.os.CountDownTimer
+import androidx.core.graphics.alpha
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,14 +11,10 @@ import java.util.*
 
 class DisappearViewModel : ViewModel(){
 
-
-    private var continueChangingDigits = true
     private val firstDigit = MutableLiveData<String>()
     private val secondDigit = MutableLiveData<String>()
     private val thirdDigit = MutableLiveData<String>()
     private val fourthDigit = MutableLiveData<String>()
-
-
 
     fun getDigitNow(digit: Int): LiveData<String> {
         when (digit) {

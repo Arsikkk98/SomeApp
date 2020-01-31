@@ -1,12 +1,16 @@
 package com.example.someapp.ui.disappear
 
+import android.animation.ObjectAnimator
+import android.animation.TypeEvaluator
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +29,8 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
     private lateinit var disappearViewModel: DisappearViewModel
     private lateinit var root: View
     private lateinit var disappearLayer: ConstraintLayout
+
+    private lateinit var swipeTextView: TextView
 
     private var continueChangingDigits = true
 
@@ -45,6 +51,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         val second = root.findViewById<TextView>(R.id.second)
         val third = root.findViewById<TextView>(R.id.third)
         val fourth = root.findViewById<TextView>(R.id.fourth)
+        swipeTextView = root.findViewById<TextView>(R.id.swipe_textView)
         val viewModel by lazy {
             ViewModelProviders.of(this).get(DisappearViewModel::class.java)
         }
@@ -60,6 +67,9 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         viewModel.getDigitNow(4).observe(this, Observer<String>{ digit ->
             fourth.text = digit
         })
+
+        val animation = AnimationUtils.loadAnimation(context, R.anim.anim_alpha)
+        swipeTextView.startAnimation(animation)
 
         return root
     }
@@ -84,6 +94,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
     }
 
     private fun graduallyDisappearAsync() {
+        swipeTextView.clearAnimation()
         disappearLayer.removeAllViews()
         GlobalScope.async(){
             val back = disappearLayer.background
