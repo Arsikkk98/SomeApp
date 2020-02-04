@@ -28,6 +28,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        goToMainActivity()
+
         val firstEditText =  findViewById<EditText>(R.id.first_digit)
         val secondEditText =  findViewById<EditText>(R.id.second_digit)
         val thirdEditText =  findViewById<EditText>(R.id.third_digit)
@@ -118,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-}
+    }
 
     private fun checkBiometricStatus(biometricManager: BiometricManager){
         when(biometricManager.canAuthenticate()){
