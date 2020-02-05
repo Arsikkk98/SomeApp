@@ -52,7 +52,7 @@ class SettingsFragment : Fragment() {
             Handler().postDelayed({
                 startActivity(Intent(context, MainActivity::class.java))
                 activity?.finish()
-            }, 100L)
+            }, 300L)
         }
 
         return root

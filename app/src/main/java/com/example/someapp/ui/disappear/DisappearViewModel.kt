@@ -1,8 +1,6 @@
 package com.example.someapp.ui.disappear
 
-import android.graphics.Color
 import android.os.CountDownTimer
-import androidx.core.graphics.alpha
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,7 +43,7 @@ class DisappearViewModel : ViewModel(){
     }
 
     private fun startFirstTimer() {
-        var timer = object: CountDownTimer(2000, 90){
+        val timer = object: CountDownTimer(2000, 90){
             override fun onFinish() {
                 firstDigit.value = "2"
             }
@@ -58,11 +56,12 @@ class DisappearViewModel : ViewModel(){
                     nowValue++
                 firstDigit.value = nowValue.toString()
             }
-        }.start()
+        }
+        timer.start()
     }
 
     private fun startSecondTimer() {
-        var timer = object: CountDownTimer(3000, 80){
+        val timer = object: CountDownTimer(3000, 80){
             override fun onFinish() {
                 secondDigit.value = "0"
             }
@@ -75,13 +74,14 @@ class DisappearViewModel : ViewModel(){
                     nowValue++
                 secondDigit.value = nowValue.toString()
             }
-        }.start()
+        }
+        timer.start()
     }
 
     private fun startThirdTimer() {
-        var timer = object: CountDownTimer(4000, 70){
+        val timer = object: CountDownTimer(4000, 70){
             override fun onFinish() {
-                val sdf = SimpleDateFormat("yyyy")
+                val sdf = SimpleDateFormat("yyyy", Locale.FRANCE)
                 val currentYear = sdf.format(Date()).toInt()
                 thirdDigit.value = ((currentYear/10)%10).toString()
             }
@@ -94,13 +94,14 @@ class DisappearViewModel : ViewModel(){
                     nowValue++
                 thirdDigit.value = nowValue.toString()
             }
-        }.start()
+        }
+        timer.start()
     }
 
     private fun startFourthTimer() {
-        var timer = object: CountDownTimer(5000, 60){
+        val timer = object: CountDownTimer(5000, 60){
             override fun onFinish() {
-                val sdf = SimpleDateFormat("yyyy")
+                val sdf = SimpleDateFormat("yyyy", Locale.FRANCE)
                 val currentYear = sdf.format(Date()).toInt()
                 fourthDigit.value = (currentYear%10).toString()
             }
@@ -113,6 +114,7 @@ class DisappearViewModel : ViewModel(){
                     nowValue++
                 fourthDigit.value = nowValue.toString()
             }
-        }.start()
+        }
+        timer.start()
     }
 }

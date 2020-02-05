@@ -10,8 +10,8 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.someapp.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 
 class DisappearFragment : Fragment(), View.OnTouchListener {
 
-    private lateinit var disappearViewModel: DisappearViewModel
+    private val disappearViewModel: DisappearViewModel by viewModels()
     private lateinit var root: View
     private lateinit var disappearLayer: ConstraintLayout
 
@@ -32,8 +32,6 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        disappearViewModel =
-            ViewModelProviders.of(this).get(DisappearViewModel::class.java)
         root = inflater.inflate(R.layout.fragment_disappear, container, false)
 
         disappearLayer = root.findViewById(R.id.disappear_layer)
@@ -44,19 +42,17 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         val third = root.findViewById<TextView>(R.id.third)
         val fourth = root.findViewById<TextView>(R.id.fourth)
         swipeTextView = root.findViewById(R.id.swipe_textView)
-        val viewModel by lazy {
-            ViewModelProviders.of(this).get(DisappearViewModel::class.java)
-        }
-        viewModel.getDigitNow(1).observe(this, Observer<String>{ digit ->
+
+        disappearViewModel.getDigitNow(1).observe(this, Observer<String>{ digit ->
             first.text = digit
         })
-        viewModel.getDigitNow(2).observe(this, Observer<String>{ digit ->
+        disappearViewModel.getDigitNow(2).observe(this, Observer<String>{ digit ->
             second.text = digit
         })
-        viewModel.getDigitNow(3).observe(this, Observer<String>{ digit ->
+        disappearViewModel.getDigitNow(3).observe(this, Observer<String>{ digit ->
             third.text = digit
         })
-        viewModel.getDigitNow(4).observe(this, Observer<String>{ digit ->
+        disappearViewModel.getDigitNow(4).observe(this, Observer<String>{ digit ->
             fourth.text = digit
         })
 
@@ -88,7 +84,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
     private fun graduallyDisappearAsync() {
         swipeTextView.clearAnimation()
         disappearLayer.removeAllViews()
-        GlobalScope.async(){
+        GlobalScope.async{
             val back = disappearLayer.background
             while (back.alpha > 20){
                 back.alpha -= 20
