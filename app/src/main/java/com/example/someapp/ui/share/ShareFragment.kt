@@ -29,7 +29,7 @@ class ShareFragment : Fragment() {
         })
 
         textView.setOnClickListener {
-            root.findNavController().navigate(R.id.action_nav_share_to_nav_send)
+            root.findNavController().navigate(R.id.action_nav_share_to_nav_home)
         }
 
         return root

@@ -24,6 +24,12 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.NavigationView" >
+        <item name="android:listDivider">@color/colorSwitchBackground</item>
+    </style>
 
 </resources>

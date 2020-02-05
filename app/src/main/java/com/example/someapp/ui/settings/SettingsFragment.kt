@@ -47,13 +47,12 @@ class SettingsFragment : Fragment() {
             } else {
                 pref.edit().putBoolean("NIGHT_MODE", false).apply()
             }
+            pref.edit().putBoolean("NIGHT_MODE_CHANGED", true).apply()
 
             Handler().postDelayed({
                 startActivity(Intent(context, MainActivity::class.java))
                 activity?.finish()
             }, 100L)
-
-
         }
 
         return root

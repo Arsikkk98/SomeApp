@@ -1,17 +1,12 @@
 package com.example.someapp.ui.disappear
 
-import android.animation.ObjectAnimator
-import android.animation.TypeEvaluator
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -21,7 +16,6 @@ import com.example.someapp.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class DisappearFragment : Fragment(), View.OnTouchListener {
@@ -31,8 +25,6 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
     private lateinit var disappearLayer: ConstraintLayout
 
     private lateinit var swipeTextView: TextView
-
-    private var continueChangingDigits = true
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -51,7 +43,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         val second = root.findViewById<TextView>(R.id.second)
         val third = root.findViewById<TextView>(R.id.third)
         val fourth = root.findViewById<TextView>(R.id.fourth)
-        swipeTextView = root.findViewById<TextView>(R.id.swipe_textView)
+        swipeTextView = root.findViewById(R.id.swipe_textView)
         val viewModel by lazy {
             ViewModelProviders.of(this).get(DisappearViewModel::class.java)
         }
