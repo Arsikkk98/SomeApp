@@ -7,12 +7,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.someapp.R
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -23,6 +26,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
     private val disappearViewModel: DisappearViewModel by viewModels()
     private lateinit var root: View
     private lateinit var disappearLayer: ConstraintLayout
+    private lateinit var imageView: ImageView
 
     private lateinit var swipeTextView: TextView
 
@@ -55,6 +59,13 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
         disappearViewModel.getDigitNow(4).observe(this, Observer<String>{ digit ->
             fourth.text = digit
         })
+
+        imageView = root.findViewById(R.id.under_image)
+
+        val builder = Picasso.Builder(requireContext())
+        builder.downloader(OkHttp3Downloader(context))
+        builder.build().load("https://picsum.photos/1080/1920.jpg").placeholder(R.drawable.placeholder)
+            .error(R.drawable.placeholder_error).into(imageView)
 
         val animation = AnimationUtils.loadAnimation(context, R.anim.anim_alpha)
         swipeTextView.startAnimation(animation)
