@@ -1,21 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textColor="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/homeProgress"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:progressTint="@color/colorText"
+            android:visibility="visible"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/homeMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:padding="10dp"
+            android:visibility="gone">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/firstPlace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorCardView"
+                app:cardCornerRadius="10dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/firstPlaceName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:textColor="@color/colorText"/>
+
+                        <TextView
+                            android:id="@+id/firstPlaceCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorText"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/firstPlaceImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentEnd="true"/>
+
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/artistsWithImagesRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/firstPlace"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/artistsWithoutImagesRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/artistsWithImagesRecycler"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

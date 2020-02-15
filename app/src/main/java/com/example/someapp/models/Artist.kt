@@ -6,5 +6,6 @@ data class Artist (
 	@SerializedName("mbid") val mbid : String,
 	@SerializedName("playcount") val playCount : Int,
 	@SerializedName("name") val name : String,
-	@SerializedName("url") val url : String
+	@SerializedName("url") val url : String,
+	var image : String
 )

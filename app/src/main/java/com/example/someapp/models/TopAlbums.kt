@@ -1,7 +1,7 @@
 import com.google.gson.annotations.SerializedName
 
-data class WeeklyArtistChart (
+data class TopAlbums (
 
-	@SerializedName("artist") val artists : List<Artist>,
+	@SerializedName("album") val albums : List<Album>,
 	@SerializedName("@attr") val attr : Attr
 )
