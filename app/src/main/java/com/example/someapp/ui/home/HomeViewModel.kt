@@ -5,6 +5,7 @@ import JsonTopAlbums
 import JsonWeeklyArtists
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.someapp.models.ArtistType
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
 import kotlinx.coroutines.runBlocking
@@ -12,39 +13,48 @@ import kotlinx.coroutines.runBlocking
 
 class HomeViewModel : ViewModel() {
 
-    val artistsWithImages: MutableLiveData<List<Artist>> by lazy {
-        MutableLiveData<List<Artist>>()
-    }
-    val artistsWithoutImages: MutableLiveData<List<Artist>> by lazy {
+    lateinit var moreArtists: List<Artist>
+
+    val artists: MutableLiveData<List<Artist>> by lazy {
         MutableLiveData<List<Artist>>()
     }
 
     init {
-        getSomething()
+        getArtists()
     }
 
-    private fun getSomething(){
+    private fun getArtists(){
         runBlocking {
-            Fuel.get("http://ws.audioscrobbler.com/2.0/?method=user.getWeeklyArtistChart&user=Arsikkk98&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json")
+            Fuel.get("https://ws.audioscrobbler.com/2.0/?method=user.getWeeklyArtistChart&user=Arsikkk98&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json")
                 .responseObject<JsonWeeklyArtists> { _, _, result ->
-                    loadImages(result.get().weeklyArtistChart.artists.subList(0, 10))
+                    changeTypes(result.get().weeklyArtistChart.artists)
+                    loadImages(result.get().weeklyArtistChart.artists.subList(0, 20))
                     val countOfArtists = result.get().weeklyArtistChart.artists.count()
-                    artistsWithoutImages.value = result.get().weeklyArtistChart.artists.subList(10, countOfArtists)
+                    moreArtists = result.get().weeklyArtistChart.artists.subList(20, countOfArtists)
                 }
         }
     }
 
-    private fun loadImages(artists : List<Artist>){
-        artists.forEach {
+    private fun changeTypes(partOfArtists : List<Artist>){
+        partOfArtists.forEach(){
+            it.type = ArtistType.ARTIST_WITHOUT_IMAGE
+        }
+    }
+
+    private fun loadImages(partOfArtists : List<Artist>){
+        for (i in 0..9) {
             runBlocking {
-                val url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" +
-                        it.name + "&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json&limit=1"
+                val url = "https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=" +
+                        partOfArtists[i].name + "&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json&limit=1"
                 Fuel.get(url)
                     .responseObject<JsonTopAlbums> { _, _, result ->
-                        it.image = result.get()?.topAlbums.albums[0].images[3].url
+                        partOfArtists[i].image = result.get()?.topAlbums.albums[0].images[3].url
+                        partOfArtists[i].type = ArtistType.ARTIST_WITH_IMAGE
 
-                        if (it == artists?.last())
-                            artistsWithImages.value = artists
+                        if (i == 9) {
+                            partOfArtists[0].type = ArtistType.FIRST_ARTIST
+                            artists.value = partOfArtists
+                        }
                     }
             }
         }

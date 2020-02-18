@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<layoutAnimation xmlns:xmln="http://schemas.android.com/apk/res/android"
+    xmln:animation="@anim/item_animation_slide_from_bottom"
+    xmln:delay="15%"
+    xmln:animationOrder="normal"
+    />
