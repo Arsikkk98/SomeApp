@@ -6,6 +6,7 @@
     <color name="colorBackground">#2B353B</color>
     <color name="colorSwitchBackground">#F5F5F5</color>
     <color name="colorText">#FFFFFF</color>
+    <color name="colorProgress">#FFDD77</color>
     <color name="colorPrimaryDarkMaterial">#69541b</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>

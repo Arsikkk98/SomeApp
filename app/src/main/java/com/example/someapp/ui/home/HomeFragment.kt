@@ -18,6 +18,8 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var root : View
     private lateinit var artists : List<Artist>
+    private lateinit var recycler: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,14 +27,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.fragment_home, container, false)
+        progressBar = root.findViewById(R.id.homeProgress)
+        recycler = root.findViewById(R.id.artistsRecycler)
 
-
-        homeViewModel.artists.observe(this, Observer {
+        homeViewModel.artists.observe(viewLifecycleOwner, Observer {
             artists = it
             updateArtistsRecycler()
-
-            val progressBar = root.findViewById<ProgressBar>(R.id.homeProgress)
-            val recycler = root.findViewById<RecyclerView>(R.id.artistsRecycler)
 
             progressBar.visibility = View.GONE
             recycler.visibility = View.VISIBLE
@@ -42,8 +42,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateArtistsRecycler(){
-        val recycler = root.findViewById<RecyclerView>(R.id.artistsRecycler)
-
         val artistsAdapter = ArtistsAdapter(artists,
             object : ArtistsAdapter.Callback {
                 override fun onItemClicked(item: Artist) {
