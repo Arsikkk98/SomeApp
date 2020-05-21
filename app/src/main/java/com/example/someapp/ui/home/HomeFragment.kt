@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.someapp.R
+import com.google.android.material.snackbar.Snackbar
 
 
 class HomeFragment : Fragment() {
@@ -29,6 +30,21 @@ class HomeFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_home, container, false)
         progressBar = root.findViewById(R.id.homeProgress)
         recycler = root.findViewById(R.id.artistsRecycler)
+
+        homeViewModel.error.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                1 -> {
+                    Snackbar.make(root, "I can't get your TOP :( \n Maybe again?",
+                                Snackbar.LENGTH_LONG)
+                            .show()
+                }
+                2 -> {
+                    Snackbar.make(root, "I can't get artist's photo :( \n Maybe again?",
+                        Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            }
+        })
 
         homeViewModel.artists.observe(viewLifecycleOwner, Observer {
             artists = it

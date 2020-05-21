@@ -8,11 +8,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_fire_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/some_app_icon_round"
+        android:roundIcon="@mipmap/icon_fire_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="true">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"

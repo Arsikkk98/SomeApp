@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.someapp.models.ArtistType
 import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.result.Result
 import com.github.kittinunf.fuel.gson.responseObject
 import kotlinx.coroutines.runBlocking
 
@@ -19,6 +20,10 @@ class HomeViewModel : ViewModel() {
         MutableLiveData<List<Artist>>()
     }
 
+    val error: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
+
     init {
         getArtists()
     }
@@ -27,9 +32,16 @@ class HomeViewModel : ViewModel() {
         runBlocking {
             Fuel.get("https://ws.audioscrobbler.com/2.0/?method=user.getWeeklyArtistChart&user=tatraef&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json")
                 .responseObject<JsonWeeklyArtists> { _, _, result ->
-                    changeTypesAndImages(result.get().weeklyArtistChart.artists.subList(0, 20))
-                    val countOfArtists = result.get().weeklyArtistChart.artists.count()
-                    moreArtists = result.get().weeklyArtistChart.artists.subList(20, countOfArtists)
+                    when (result) {
+                        is Result.Success -> {
+                            changeTypesAndImages(result.get().weeklyArtistChart.artists.subList(0, 20))
+                            val countOfArtists = result.get().weeklyArtistChart.artists.count()
+                            moreArtists = result.get().weeklyArtistChart.artists.subList(20, countOfArtists)
+                        }
+                        is Result.Failure -> {
+                            error.value = 1
+                        }
+                    }
                 }
         }
     }
@@ -45,6 +57,7 @@ class HomeViewModel : ViewModel() {
             partOfArtists[i].type = ArtistType.ARTIST_WITHOUT_IMAGE
         }
 
+        artists.value = partOfArtists
         loadImages(partOfArtists)
     }
 
@@ -56,9 +69,15 @@ class HomeViewModel : ViewModel() {
                         "&api_key=d0d3d3e2f51e2f5767d7bffeb1d733da&format=json&limit=1"
 
                 Fuel.get(url).responseObject<JsonTopAlbums> { _, _, result ->
-                    partOfArtists[i].image = result.get()?.topAlbums.albums[0].images[3].url
-
-                    if (i == 9) artists.value = partOfArtists
+                    when (result) {
+                        is Result.Success -> {
+                            partOfArtists[i].image = result.get().topAlbums.albums[0].images[3].url
+                            if (i == 9) artists.value = partOfArtists
+                        }
+                        is Result.Failure -> {
+                            error.value = 2
+                        }
+                    }
                 }
             }
         }
