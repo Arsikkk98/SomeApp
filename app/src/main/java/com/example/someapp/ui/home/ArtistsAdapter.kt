@@ -60,10 +60,12 @@ class ArtistsAdapter(var items: List<Artist>, val callback: Callback, val contex
             name.text = item.attr.rank.toString()+ ". " + item.name
             count.text = item.playCount.toString() + " times"
 
-            val builder = Picasso.Builder(context)
-            builder.downloader(OkHttp3Downloader(context))
-            builder.build().load(item.image).placeholder(R.drawable.placeholder_artist)
-                .error(R.drawable.placeholder_artist_error).into(image)
+            if(item.image != null && item.image.isNotEmpty()){
+                val builder = Picasso.Builder(context)
+                builder.downloader(OkHttp3Downloader(context))
+                builder.build().load(item.image).placeholder(R.drawable.placeholder_artist)
+                    .error(R.drawable.placeholder_artist_error).into(image)
+            }
 
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
