@@ -64,7 +64,7 @@ class DisappearFragment : Fragment(), View.OnTouchListener {
 
         val builder = Picasso.Builder(requireContext())
         builder.downloader(OkHttp3Downloader(context))
-        builder.build().load("https://picsum.photos/1080/1920.jpg").placeholder(R.drawable.placeholder)
+        builder.build().load("https://picsum.photos/2560/1440.jpg").placeholder(R.drawable.placeholder)
             .error(R.drawable.placeholder_error).into(imageView)
 
         val animation = AnimationUtils.loadAnimation(context, R.anim.anim_alpha)
